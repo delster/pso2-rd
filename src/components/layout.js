@@ -1,18 +1,11 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+import React from 'react'
+import tw from 'twin.macro'
+import { createGlobalStyle } from 'styled-components'
+import { useStaticQuery, graphql } from 'gatsby'
+import Header from './partials/header'
+import Footer from './partials/footer'
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-
-import Header from "./header"
-import "./layout.css"
-
-const Layout = ({ children }) => {
+export default ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -25,27 +18,22 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      <GlobalStyle />
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
+      <Main>{children}</Main>
+      <Footer />
     </>
   )
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+const GlobalStyle = createGlobalStyle`
+  h1 {font-size:3.052rem;margin:.25em;text-align:center}
+  h2 {font-size:2.441rem;margin-bottom:.25em}
+  h3 {font-size:1.953rem;margin-bottom:.25em}
+  h4 {font-size:1.563rem;margin-bottom:.25em}
+  h5 {font-size:1.25rem;margin-bottom:.25em}
+  h6 {font-size:1rem;margin-bottom:.25em}
+  p {font-size:20px;margin-bottom:1.5em}
+`
 
-export default Layout
+const Main = tw.main`container mx-auto`
